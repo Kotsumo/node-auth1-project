@@ -33,7 +33,7 @@ const {
  */
 router.post('/register', checkPasswordLength, checkUsernameFree, (req, res, next) => {
   const { username, password } = req.body
-  const hash = bcrypt.hashSync(password, 10)
+  const hash = bcrypt.hashSync(password, 8)
 
   User.add({ username, password: hash })
   .then(saved => {
@@ -63,7 +63,7 @@ router.post('/register', checkPasswordLength, checkUsernameFree, (req, res, next
       // make it so the cookie is set on the client
       // make it so server stores a session with a session id
       req.session.user = req.user
-      res.json({ message: `Welcome ${req.user.username}`})
+      res.json({ message: `Welcome ${req.user.username}!`})
     } else {
       next({ status: 401, message: 'Invalid credentials' })
     }
